@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Inova9 - controle de produção, recursos e desperdícios.">
+    <title>Inova9 | Controle de Produção</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+<header class="topo">
+    <div class="container topo-conteudo">
+        <a class="marca" href="#inicio"><span class="marca-simbolo">I9</span><span><strong>Inova9</strong><small>GESTÃO INTELIGENTE DE RECURSOS</small></span></a>
+        <span class="topo-etiqueta">Projeto Integrador</span>
+    </div>
+</header>
+<main class="container principal" id="inicio">
+    <section class="apresentacao">
+        <div><p class="sobretitulo">PAINEL DE CONTROLE</p><h1>Registros de produção</h1><p class="descricao">Acompanhe a produção, os desperdícios e o consumo de recursos da empresa em um só lugar.</p></div>
+        <div class="status-local"><span class="status-ponto"></span>Dados salvos neste navegador</div>
+    </section>
+
+    <section class="indicadores" aria-label="Resumo dos registros">
+        <article class="indicador"><span class="indicador-rotulo">Registros cadastrados</span><strong id="total-registros">0</strong><span class="indicador-detalhe">lançamentos no sistema</span></article>
+        <article class="indicador"><span class="indicador-rotulo">Peças produzidas</span><strong id="total-produzidas">0</strong><span class="indicador-detalhe">produção registrada</span></article>
+        <article class="indicador"><span class="indicador-rotulo">Peças perdidas</span><strong id="total-perdidas">0</strong><span class="indicador-detalhe">perdas registradas</span></article>
+        <article class="indicador"><span class="indicador-rotulo">Água consumida</span><strong id="total-agua">0 L</strong><span class="indicador-detalhe">consumo acumulado</span></article>
+    </section>
+
+    <section class="painel formulario-painel">
+        <div class="painel-cabecalho"><div><p class="sobretitulo">LANÇAMENTO</p><h2 id="titulo-formulario">Novo registro</h2><p class="texto-apoio">Preencha os dados da produção para adicionar ao controle.</p></div><span class="numero-etapa">01</span></div>
+        <form id="form-registro" novalidate>
+            <input type="hidden" id="id-edicao">
+            <div class="campos">
+                <label class="campo"><span>Data do registro <b>*</b></span><input type="date" id="data-registro" required></label>
+                <label class="campo"><span>Máquina <b>*</b></span><input type="text" id="maquina" maxlength="60" placeholder="Ex.: Prensa hidráulica 01" required></label>
+                <label class="campo"><span>Responsável <b>*</b></span><input type="text" id="responsavel" maxlength="80" placeholder="Nome do responsável" required></label>
+                <label class="campo"><span>Produção planejada <b>*</b></span><input type="number" id="producao-planejada" min="1" step="1" placeholder="Ex.: 500" required></label>
+                <label class="campo"><span>Peças produzidas <b>*</b></span><input type="number" id="pecas-produzidas" min="0" step="1" placeholder="Ex.: 480" required></label>
+                <label class="campo"><span>Peças perdidas <b>*</b></span><input type="number" id="pecas-perdidas" min="0" step="1" placeholder="Ex.: 12" required></label>
+                <label class="campo"><span>Água utilizada (litros) <b>*</b></span><input type="number" id="agua-litros" min="0" step="0.01" placeholder="Ex.: 150.5" required></label>
+                <label class="campo"><span>Energia utilizada (kWh) <b>*</b></span><input type="number" id="energia-kwh" min="0" step="0.01" placeholder="Ex.: 32.8" required></label>
+                <label class="campo"><span>Material reciclado (kg) <b>*</b></span><input type="number" id="material-reciclado" min="0" step="0.01" placeholder="Ex.: 8.5" required></label>
+            </div>
+            <div class="acoes-formulario"><p class="nota-campos">* Campos obrigatórios. Os valores numéricos não podem ser negativos.</p><div class="botoes"><button type="button" id="cancelar-edicao" class="botao botao-secundario" hidden>Cancelar edição</button><button type="submit" id="botao-salvar" class="botao botao-principal"><span id="texto-botao">Salvar registro</span><span aria-hidden="true">→</span></button></div></div>
+            <p id="mensagem-feedback" class="feedback" role="status" aria-live="polite"></p>
+        </form>
+    </section>
+
+    <section class="painel tabela-painel">
+        <div class="painel-cabecalho tabela-cabecalho"><div><p class="sobretitulo">ACOMPANHAMENTO</p><h2>Registros cadastrados</h2><p class="texto-apoio">Consulte, edite ou exclua os lançamentos.</p></div><label class="busca"><span aria-hidden="true">⌕</span><span class="sr-only">Buscar por máquina ou responsável</span><input type="search" id="busca-registros" placeholder="Buscar registro..."></label></div>
+        <div class="tabela-responsiva">
+            <table><thead><tr><th>Data</th><th>Máquina / Responsável</th><th>Planejado</th><th>Produzidas</th><th>Perdidas</th><th>Água (L)</th><th>Energia (kWh)</th><th>Reciclado (kg)</th><th>Ações</th></tr></thead><tbody id="corpo-tabela"></tbody></table>
+            <div id="estado-vazio" class="estado-vazio" hidden><span class="estado-icone">▤</span><strong>Nenhum registro encontrado</strong><p>Cadastre um lançamento ou altere o termo da busca.</p></div>
+        </div>
+        <div class="rodape-tabela"><span id="quantidade-exibida">Exibindo 0 registros</span><span>Inova9 · Controle de recursos</span></div>
+    </section>
+</main>
+<footer class="rodape"><div class="container"><span>Inova9</span><span>Projeto Integrador · Programação para WEB I</span></div></footer>
+
+<!-- A ordem dos arquivos segue a orientação da atividade. -->
+<script src="js/script-inicial.js"></script>
+<script src="js/banco.js"></script>
+<script src="js/crud.js"></script>
+<script src="js/interface.js"></script>
+</body>
+</html>
